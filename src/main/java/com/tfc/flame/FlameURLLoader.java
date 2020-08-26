@@ -54,6 +54,10 @@ public class FlameURLLoader extends URLClassLoader {
 		return baseCodeGetters;
 	}
 	
+	public void addURL(URL url) {
+		super.addURL(url);
+	}
+	
 	public void findReplacement(String name) {
 		FlameConfig.field.append(name + "\n");
 		String name1 = "";
