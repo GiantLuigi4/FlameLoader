@@ -109,7 +109,7 @@ public class FlameURLLoader extends URLClassLoader {
 //			return classLoader;
 //		}
 		
-		if (name.startsWith("com.tfc.flame")) {
+		if (name.startsWith("com.tfc.flame") || name.startsWith("com.mojang.serialization")) {
 			try {
 				return this.getParent().loadClass(name);
 			} catch (Throwable err) {
