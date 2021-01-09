@@ -119,7 +119,7 @@ public class FlameURLLoader extends URLClassLoader {
 			} catch (Throwable err) {
 				if (
 						name.startsWith("com.tfc.flame") &&
-						!name.startsWith("com.tfc.flame.")
+						!name.substring("com.tfc.flame.a".length()).contains(".")
 				)
 					throw new SecurityException("Tried to load class in invalid namespace: \"com.tfc.flame\"");
 			}
