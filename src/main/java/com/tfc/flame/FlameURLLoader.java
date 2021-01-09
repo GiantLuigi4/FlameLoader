@@ -117,7 +117,11 @@ public class FlameURLLoader extends URLClassLoader {
 			try {
 				return this.getParent().loadClass(name);
 			} catch (Throwable err) {
-				throw new SecurityException("Tried to load class in invalid namespace: \"com.tfc.flame\"");
+				if (
+						name.startsWith("com.tfc.flame") &&
+						!name.startsWith("com.tfc.flame.")
+				)
+					throw new SecurityException("Tried to load class in invalid namespace: \"com.tfc.flame\"");
 			}
 		}
 		synchronized (this.getClassLoadingLock(name)) {
