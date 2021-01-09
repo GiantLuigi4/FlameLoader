@@ -13,7 +13,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     // https://mvnrepository.com/artifact/org.apache.bcel/bcel
-    compile group: 'org.apache.bcel', name: 'bcel', version: '6.0'
+//    compile group: 'org.apache.bcel', name: 'bcel', version: '6.0'
 
     // https://mvnrepository.com/artifact/org.ow2.asm/asm
     compileOnly group: 'org.ow2.asm', name: 'asm', version: '8.0.1'

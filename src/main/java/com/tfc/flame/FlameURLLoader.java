@@ -1,6 +1,6 @@
 package com.tfc.flame;
 
-import org.apache.bcel.util.ClassPath;
+//import org.apache.bcel.util.ClassPath;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -68,18 +68,18 @@ public class FlameURLLoader extends URLClassLoader {
 		} catch (Throwable ignored) {
 		}
 		if (bytes1 == null) {
-			for (URL url : this.getURLs()) {
-				if (bytes1 == null) {
-					try {
-						bytes1 = new ClassPath(url.getPath()).getBytes(name);
-					} catch (Throwable err) {
-						try {
-							bytes1 = new ClassPath(url.getFile()).getBytes(name);
-						} catch (Throwable ignored) {
-						}
-					}
-				}
-			}
+//			for (URL url : this.getURLs()) {
+//				if (bytes1 == null) {
+//					try {
+//						bytes1 = new ClassPath(url.getPath()).getBytes(name);
+//					} catch (Throwable err) {
+//						try {
+//							bytes1 = new ClassPath(url.getFile()).getBytes(name);
+//						} catch (Throwable ignored) {
+//						}
+//					}
+//				}
+//			}
 			try {
 				InputStream stream = this.getResourceAsStream(name);
 				assert stream != null;
@@ -123,14 +123,14 @@ public class FlameURLLoader extends URLClassLoader {
 //				long t0 = System.nanoTime();
 				try {
 					byte[] bytes1 = null;
-					for (URL url : this.getURLs()) {
-						if (bytes1 == null) {
-							try {
-								bytes1 = new ClassPath(url.getPath()).getBytes(name);
-							} catch (Throwable ignored) {
-							}
-						}
-					}
+//					for (URL url : this.getURLs()) {
+//						if (bytes1 == null) {
+//							try {
+//								bytes1 = new ClassPath(url.getPath()).getBytes(name);
+//							} catch (Throwable ignored) {
+//							}
+//						}
+//					}
 					if (bytes1 == null) {
 						try {
 							InputStream stream = this.getResourceAsStream(name);
