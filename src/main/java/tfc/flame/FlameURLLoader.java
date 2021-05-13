@@ -1,4 +1,4 @@
-package com.tfc.flame;
+package tfc.flame;
 
 import org.apache.bcel.util.ClassPath;
 
@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.zip.ZipEntry;
 
 public class FlameURLLoader extends URLClassLoader {
 	public FlameURLLoader(URL[] urls) {
@@ -54,7 +56,10 @@ public class FlameURLLoader extends URLClassLoader {
 		return baseCodeGetters;
 	}
 	
+	public ArrayList<Consumer<URL>> urlAddListeners = new ArrayList<>();
+	
 	public void addURL(URL url) {
+		for (Consumer<URL> urlAddListener : urlAddListeners) urlAddListener.accept(url);
 		super.addURL(url);
 	}
 	
@@ -105,11 +110,11 @@ public class FlameURLLoader extends URLClassLoader {
 	@Override
 	protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
 //		if (name.equals("java.lang.ClassLoader")) {
-//			classLoader = loadClass("com.tfc.flame.FlameClassLoader");
+//			classLoader = loadClass("tfc.flame.FlameClassLoader");
 //			return classLoader;
 //		}
 		
-		if (name.startsWith("com.tfc.flame") ||
+		if (name.startsWith("tfc.flame") ||
 //				name.startsWith("com.mojang.serialization") ||
 //				name.startsWith("com.mojang.datafixers")
 				name.startsWith("com.mojang")
@@ -118,10 +123,10 @@ public class FlameURLLoader extends URLClassLoader {
 				return this.getParent().loadClass(name);
 			} catch (Throwable err) {
 				if (
-						name.startsWith("com.tfc.flame") &&
-						!name.substring("com.tfc.flame.a".length()).contains(".")
+						name.startsWith("tfc.flame") &&
+						!name.substring("tfc.flame.a".length()).contains(".")
 				)
-					throw new SecurityException("Tried to load class in invalid namespace: \"com.tfc.flame\"");
+					throw new SecurityException("Tried to load class in invalid namespace: \"tfc.flame\"");
 			}
 		}
 		synchronized (this.getClassLoadingLock(name)) {
@@ -158,7 +163,7 @@ public class FlameURLLoader extends URLClassLoader {
 						bytes1 = replacements.get(name);
 					} else if (bytes1 != null && merges.containsKey(name)) {
 						FlameConfig.field.append("Merging class: " + name + " with modded versions of said class.\n");
-						FlameConfig.field.append("Things might go wrong.\n");
+						FlameConfig.field.append("Things will probably go wrong.\n");
 						bytes1 = merge(bytes1, merges.get(name));
 					}
 					//Use replacement getters

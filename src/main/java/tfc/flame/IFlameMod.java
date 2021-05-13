@@ -1,4 +1,4 @@
-package com.tfc.flame;
+package tfc.flame;
 
 public interface IFlameMod {
 	void preinit(String[] args);
