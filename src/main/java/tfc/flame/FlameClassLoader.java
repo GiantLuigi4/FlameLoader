@@ -10,4 +10,12 @@ public class FlameClassLoader extends ClassLoader {
 	{
 		return defineClass(name, b, off, len, null);
 	}
+	
+	public FlameClassLoader(ClassLoader parent) {
+		super(parent);
+	}
+	
+	public FlameClassLoader() {
+		super(FlameClassLoader.class.getClassLoader());
+	}
 }

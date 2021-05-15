@@ -109,10 +109,10 @@ public class FlameURLLoader extends URLClassLoader {
 	
 	@Override
 	protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-//		if (name.equals("java.lang.ClassLoader")) {
-//			classLoader = loadClass("tfc.flame.FlameClassLoader");
-//			return classLoader;
-//		}
+		if (name.equals("java.lang.ClassLoader")) {
+			classLoader = loadClass("tfc.flame.FlameClassLoader");
+			return classLoader;
+		}
 		
 		if (name.startsWith("tfc.flame") ||
 //				name.startsWith("com.mojang.serialization") ||
