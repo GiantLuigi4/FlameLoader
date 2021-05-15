@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.zip.ZipEntry;
 
 public class FlameURLLoader extends URLClassLoader {
 	public FlameURLLoader(URL[] urls) {
@@ -109,10 +108,10 @@ public class FlameURLLoader extends URLClassLoader {
 	
 	@Override
 	protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-		if (name.equals("java.lang.ClassLoader")) {
-			classLoader = loadClass("tfc.flame.FlameClassLoader");
-			return classLoader;
-		}
+//		if (name.equals("java.lang.ClassLoader")) {
+//			classLoader = loadClass("tfc.flame.FlameClassLoader");
+//			return classLoader;
+//		}
 		
 		if (name.startsWith("tfc.flame") ||
 //				name.startsWith("com.mojang.serialization") ||
@@ -169,8 +168,8 @@ public class FlameURLLoader extends URLClassLoader {
 					//Use replacement getters
 					for (Function<String, byte[]> function : replacementGetters.values()) {
 						byte[] bytes2 = function.apply(name);
-						if (bytes2!=null) {
-							bytes1=bytes2;
+						if (bytes2 != null) {
+							bytes1 = bytes2;
 						}
 					}
 					//Handle ASM
@@ -179,7 +178,15 @@ public class FlameURLLoader extends URLClassLoader {
 					}
 					if (FlameConfig.log_bytecode) FlameConfig.field.append(Arrays.toString(bytes1) + "\n");
 					//Define if possible
-					if (bytes1 != null) c = this.defineClass(bytes1, 0, bytes1.length);
+//					try {
+//						Class<?> clazz = this.getClass();
+//						Method m = clazz.getDeclaredMethod("defineClass1", String.class, byte[].class, int.class, int.class, ProtectionDomain.class, String.class);
+//						m.setAccessible(true);
+//						return (Class<?>) m.invoke(getParent(), bytes1, 0, bytes1.length);
+//					} catch (Throwable ignored) {
+//					}
+					if (bytes1 != null) c = this.defineClass(name, bytes1, 0, bytes1.length);
+//					if (bytes1 != null) c = this.defineClass(bytes1, 0, bytes1.length);
 					//Load from parent
 					if (c == null && this.getParent() != null) c = this.getParent().loadClass(name);
 				} catch (ClassNotFoundException err) {
