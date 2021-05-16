@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.jar.Manifest;
 
 public class FlameURLLoader extends URLClassLoader {
 	public FlameURLLoader(URL[] urls) {
@@ -215,6 +216,10 @@ public class FlameURLLoader extends URLClassLoader {
 			
 			return c;
 		}
+	}
+	
+	public Package definePackage(String name, Manifest mf, URL url) {
+		return super.definePackage(name, mf, url);
 	}
 	
 	public Class<?> define(String name, byte[] bytes) {
