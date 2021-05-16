@@ -47,6 +47,8 @@ public class FlameURLLoader extends URLClassLoader {
 	private final HashMap<String, BiFunction<String, byte[], byte[]>> asmAppliers = new HashMap<>();
 	private final HashMap<String, Function<String, byte[]>> baseCodeGetters = new HashMap<>();
 	
+	public BiFunction<String, byte[], Class<?>> classDefiner = (name, bytes) -> defineClass(name, bytes, 0, bytes.length);
+	
 	public HashMap<String, Function<String, byte[]>> getReplacementGetters() {
 		return replacementGetters;
 	}
@@ -189,7 +191,7 @@ public class FlameURLLoader extends URLClassLoader {
 //						return (Class<?>) m.invoke(getParent(), bytes1, 0, bytes1.length);
 //					} catch (Throwable ignored) {
 //					}
-					if (bytes1 != null) c = this.defineClass(name, bytes1, 0, bytes1.length);
+					if (bytes1 != null) c = classDefiner.apply(name, bytes1);
 //					if (bytes1 != null) c = this.defineClass(bytes1, 0, bytes1.length);
 					//Load from parent
 					if (c == null && this.getParent() != null) c = this.getParent().loadClass(name);
