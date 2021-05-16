@@ -222,6 +222,10 @@ public class FlameURLLoader extends URLClassLoader {
 		return super.definePackage(name, mf, url);
 	}
 	
+	public Package getPackage(String name) {
+		return super.getPackage(name);
+	}
+	
 	public Class<?> define(String name, byte[] bytes) {
 		return defineClass(name, bytes, 0, bytes.length);
 	}
