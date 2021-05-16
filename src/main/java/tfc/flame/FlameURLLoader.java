@@ -5,6 +5,7 @@ import org.apache.bcel.util.ClassPath;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -214,6 +215,14 @@ public class FlameURLLoader extends URLClassLoader {
 			
 			return c;
 		}
+	}
+	
+	public Class<?> define(String name, byte[] bytes) {
+		return defineClass(name, bytes, 0, bytes.length);
+	}
+	
+	public Class<?> define(String name, byte[] bytes, CodeSource source) {
+		return defineClass(name, bytes, 0, bytes.length, source);
 	}
 	
 	private byte[] merge(byte[] source, byte[] to_merge) {
