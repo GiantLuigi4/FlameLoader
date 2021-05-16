@@ -17,6 +17,10 @@ public class FlameURLLoader extends URLClassLoader {
 		super(urls);
 	}
 	
+	public FlameURLLoader(URL[] urls, ClassLoader parent) {
+		super(urls, parent);
+	}
+	
 	public Class<?> load(String name, boolean resolve) throws ClassNotFoundException {
 		return loadClass(name, resolve);
 	}
