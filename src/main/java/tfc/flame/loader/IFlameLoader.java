@@ -23,6 +23,14 @@ public interface IFlameLoader {
 	 * @param name the name of the package
 	 */
 	void addPackageOverride(String name);
+
+	/**
+	 * adds a system path to be loaded from the flame loader
+	 * this is intended for dev env, so you can mark the root file of your project and have all files under that load on the mod loader
+	 *
+	 * @param name the directory to add to the loader
+	 */
+	void addOverridePath(String name);
 	
 	/**
 	 * finds the top most resource with the given name

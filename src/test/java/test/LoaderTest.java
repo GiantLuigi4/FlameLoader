@@ -1,13 +1,13 @@
 package test;
 
 import tfc.flame.loader.FlameLoader;
+import tfc.flame.loader.IFlameLoader;
 import tfc.flame.loader.util.JDKLoader;
 
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Objects;
 
 // so, if I put this in the test class path, then mixin refuses to not load
 public class LoaderTest {
@@ -34,7 +34,7 @@ public class LoaderTest {
             ));
 
             ClassLoader loader = (ClassLoader) JDKLoader.createLoader(paths.toArray(new URL[0]), FlameLoader.class.getClassLoader(), true);
-            ((FlameLoader) loader).addUrlRoot(new File("").getAbsolutePath());
+            ((IFlameLoader) loader).addOverridePath(new File("").getAbsolutePath());
 
             Thread.currentThread().setContextClassLoader(loader);
 

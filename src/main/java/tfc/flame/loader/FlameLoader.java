@@ -68,7 +68,7 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 		packagesToAccept.add(name);
 	}
 
-	public void addUrlRoot(String name) {
+	public void addOverridePath(String name) {
 		if (!name.startsWith("/")) name = "/" + name;
 		urlRoots.add(name.replace(File.separatorChar, '/'));
 	}
