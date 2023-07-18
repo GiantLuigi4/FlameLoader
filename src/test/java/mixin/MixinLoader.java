@@ -20,9 +20,7 @@ public class MixinLoader {
 			
 			Mixins.addConfiguration("test.mixins.json");
 			
-			Constructor<?> ctor = Class.forName("org.spongepowered.asm.mixin.transformer.MixinTransformer").getDeclaredConstructor();
-			ctor.setAccessible(true);
-			IMixinTransformer transformer = (IMixinTransformer) ctor.newInstance();
+			IMixinTransformer transformer = MixinServiceTest.getInstance().getTransformer();
 			
 			ClassLoader theLoader = MixinLoader.class.getClassLoader();
 			MIXIN_TRANSFORMER = new ClassTransformer() {
