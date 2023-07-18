@@ -1,9 +1,14 @@
 package tfc.flame;
 
 public interface IFlameMod {
-	void preinit(String[] args);
+	/**
+	 * Primarily for API setup
+	 */
+	default void preInit() {
+	}
 	
-	void init(String[] args);
-	
-	void postinit(String[] args);
+	/**
+	 * Most mods should only use this
+	 */
+	void onInit();
 }

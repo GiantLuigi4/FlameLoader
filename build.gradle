@@ -3,24 +3,32 @@ plugins {
 }
 
 group 'com.tfc'
-version '1.0'
+version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven {
+        name = "spongepowered"
+        url = "https://repo.spongepowered.org/repository/maven-public/"
+    }
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
-    // https://mvnrepository.com/artifact/org.apache.bcel/bcel
-    compile group: 'org.apache.bcel', name: 'bcel', version: '6.0'
+    implementation group: 'org.ow2.asm', name: 'asm', version: '9.5'
+    implementation group: 'org.ow2.asm', name: 'asm-util', version: '9.5'
+    implementation group: 'org.ow2.asm', name: 'asm-tree', version: '9.5'
+    implementation group: 'org.ow2.asm', name: 'asm-commons', version: '9.5'
 
-    // https://mvnrepository.com/artifact/org.ow2.asm/asm
-    compileOnly group: 'org.ow2.asm', name: 'asm', version: '8.0.1'
-    // https://mvnrepository.com/artifact/org.ow2.asm/asm-commons
-    compileOnly group: 'org.ow2.asm', name: 'asm-commons', version: '8.0.1'
-    // https://mvnrepository.com/artifact/org.ow2.asm/asm-tree
-    compileOnly group: 'org.ow2.asm', name: 'asm-tree', version: '8.0.1'
-    // https://mvnrepository.com/artifact/org.ow2.asm/asm-util
-    compileOnly group: 'org.ow2.asm', name: 'asm-util', version: '8.0.1'
+    implementation 'com.google.code.gson:gson:2.2.4'
+    implementation 'com.google.guava:guava:21.0'
+    testCompileOnly("org.spongepowered:mixin:0.8.5") {
+        transitive = false
+    }
+}
+
+test {
+    useJUnitPlatform()
 }
