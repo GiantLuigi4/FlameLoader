@@ -307,10 +307,12 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 			definePackage(resource, pkgname, resource.mf, path[1]);
 		}
 		
-		CodeSigner[] signers = null;
-		if (resource.entry != null) signers = resource.entry.getCodeSigners();
-		CodeSource cs = new CodeSource(path[1], signers);
-		return super.defineClass(name, data, 0, data.length, cs);
+		if (path[1] != null) {
+			CodeSigner[] signers = null;
+			if (resource.entry != null) signers = resource.entry.getCodeSigners();
+			CodeSource cs = new CodeSource(path[1], signers);
+			return super.defineClass(name, data, 0, data.length, cs);
+		} else return super.defineClass(name, data, 0, data.length);
 	}
 	
 	public URL[] getClassPath() {
