@@ -5,11 +5,9 @@ import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 import org.spongepowered.asm.mixin.Mixins;
 import org.spongepowered.asm.mixin.transformer.IMixinTransformer;
-import tfc.flame.asm.ClassTransformer;
-import tfc.flame.asm.Phase;
+import tfc.flame.loader.asm.ClassTransformer;
+import tfc.flame.loader.asm.Phase;
 import tfc.flame.loader.FlameLoader;
-
-import java.lang.reflect.Constructor;
 
 public class MixinLoader {
 	public static final ClassTransformer MIXIN_TRANSFORMER;

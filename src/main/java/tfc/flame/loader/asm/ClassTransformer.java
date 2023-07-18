@@ -1,4 +1,4 @@
-package tfc.flame.asm;
+package tfc.flame.loader.asm;
 
 import org.objectweb.asm.tree.ClassNode;
 

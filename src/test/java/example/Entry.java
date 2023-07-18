@@ -2,10 +2,10 @@ package example;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import tfc.flame.IFlameMod;
-import tfc.flame.asm.ITransformerEntry;
+import tfc.flame.loader.IFlameMod;
+import tfc.flame.loader.asm.ITransformerEntry;
 import tfc.flame.loader.IFlameLoader;
-import tfc.flame.util.JDKLoader;
+import tfc.flame.loader.util.JDKLoader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

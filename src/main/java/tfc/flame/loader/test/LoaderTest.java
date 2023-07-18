@@ -1,7 +1,7 @@
-package tfc.flame.test;
+package tfc.flame.loader.test;
 
 import tfc.flame.loader.FlameLoader;
-import tfc.flame.util.JDKLoader;
+import tfc.flame.loader.util.JDKLoader;
 
 import java.io.File;
 import java.lang.reflect.Method;

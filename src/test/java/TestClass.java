@@ -1,6 +1,6 @@
 import org.objectweb.asm.tree.ClassNode;
-import tfc.flame.asm.ClassTransformer;
-import tfc.flame.asm.Phase;
+import tfc.flame.loader.asm.ClassTransformer;
+import tfc.flame.loader.asm.Phase;
 import tfc.flame.loader.FlameLoader;
 
 public class TestClass {

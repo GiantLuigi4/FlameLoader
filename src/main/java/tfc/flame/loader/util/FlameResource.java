@@ -1,4 +1,4 @@
-package tfc.flame.loader;
+package tfc.flame.loader.util;
 
 import java.net.JarURLConnection;
 import java.net.URL;
@@ -8,12 +8,12 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 public class FlameResource {
-	URL path;
-	byte[] data;
-	
-	JarFile jar = null;
-	JarEntry entry = null;
-	Manifest mf = null;
+	public URL path;
+	public byte[] data;
+
+	public JarFile jar = null;
+	public JarEntry entry = null;
+	public Manifest mf = null;
 	
 	public FlameResource(URL path, byte[] data) {
 		this.path = path;

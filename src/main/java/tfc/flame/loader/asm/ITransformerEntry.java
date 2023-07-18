@@ -1,4 +1,4 @@
-package tfc.flame.asm;
+package tfc.flame.loader.asm;
 
 public interface ITransformerEntry {
 	void setup();

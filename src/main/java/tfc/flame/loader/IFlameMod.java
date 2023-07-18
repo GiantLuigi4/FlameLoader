@@ -1,4 +1,4 @@
-package tfc.flame;
+package tfc.flame.loader;
 
 public interface IFlameMod {
 	/**

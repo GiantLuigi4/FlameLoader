@@ -1,8 +1,8 @@
 package example;
 
 import com.google.gson.JsonObject;
-import tfc.flame.IFlameMod;
-import tfc.flame.asm.ITransformerEntry;
+import tfc.flame.loader.IFlameMod;
+import tfc.flame.loader.asm.ITransformerEntry;
 
 public class ModContainer {
 	String name;

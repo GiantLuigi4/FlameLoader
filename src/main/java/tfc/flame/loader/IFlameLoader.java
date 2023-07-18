@@ -1,6 +1,6 @@
 package tfc.flame.loader;
 
-import tfc.flame.asm.ClassTransformer;
+import tfc.flame.loader.asm.ClassTransformer;
 
 import java.io.IOException;
 import java.io.InputStream;

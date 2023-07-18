@@ -1,4 +1,4 @@
-package tfc.flame.asm;
+package tfc.flame.loader.asm;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
