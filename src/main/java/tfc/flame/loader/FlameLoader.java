@@ -25,7 +25,7 @@ import java.util.jar.Manifest;
  * Avoid referring to this directly
  * <p>
  * Refer to {@link JDKLoader} instead for getting an instance of a FlameLoader
- * And you can cast to {@link IFlameLoxader} for methods specific to the Flame loader, or {@link ClassLoader} for regular class loader methods
+ * And you can cast to {@link IFlameLoader} for methods specific to the Flame loader, or {@link ClassLoader} for regular class loader methods
  */
 @Deprecated
 public class FlameLoader extends URLClassLoader implements IFlameLoader {
@@ -69,7 +69,8 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 	}
 
 	public void addUrlRoot(String name) {
-		packagesToAccept.add(name);
+		if (!name.startsWith("/")) name = "/" + name;
+		urlRoots.add(name.replace(File.separatorChar, '/'));
 	}
 
 	@Override
@@ -93,7 +94,7 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 			try {
 				URL url = new URL(pth);
 				if (url.getProtocol().equals("file")) {
-					if (new File(url.toString().substring("file:/".length())).exists()) {
+					if (new File(url.toString().substring("file:".length())).exists()) {
 						return new URL[]{url, path};
 					} else {
 						continue;
@@ -189,7 +190,7 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 		// check if the package exists
 		if (pkg != null) {
 			// check that it's not tfc.flame.loading a class into a sealed package
-			if (pkg.isSealed() && !pkg.isSealed(base)) {
+			if (pkg.isSealed() && base != null && !pkg.isSealed(base)) {
 				throw new RuntimeException("Cannot load class in a sealed package");
 			} else {
 				// TODO: ?????? java please
@@ -240,6 +241,18 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 			}
 		}
 
+		if (!urlRoots.isEmpty()) {
+			if (path[1] == null) {
+				URL url = getParent().getResource(name.replace(".", "/") + ".class");
+
+				String pth = url.getFile();
+				for (String urlRoot : urlRoots) {
+					if (pth.startsWith(urlRoot))
+						return true;
+				}
+			}
+		}
+
 		return acceptedURL;
 	}
 
@@ -250,9 +263,9 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 		boolean acceptedURL = checkPackage(name, path);
 		
 		if (aggressive || acceptedURL) {
-			if (name.startsWith("java"))
-				return super.loadClass(name, resolve);
-			
+			if (name.startsWith("java")) return super.loadClass(name, resolve);
+			if (name.startsWith("tfc.flame.loader")) return super.loadClass(name, resolve);
+
 			Class<?> c = findLoadedClass(name);
 			if (c != null) return c;
 			

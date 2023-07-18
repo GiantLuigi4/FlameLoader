@@ -1,4 +1,4 @@
-package tfc.flame.loader.test;
+package test;
 
 import tfc.flame.loader.FlameLoader;
 import tfc.flame.loader.util.JDKLoader;
@@ -15,25 +15,26 @@ public class LoaderTest {
         try {
             ArrayList<URL> paths = new ArrayList<>();
 
-            File fl = new File("out");
-            if (fl.exists()) {
-                paths.add(new File(fl + "/test/classes").toURL());
-                paths.add(new File(fl + "/test/resources").toURL());
-            } else {
-                fl = new File("build/classes");
-                if (fl.exists())
-                    for (File file : Objects.requireNonNull(fl.listFiles()))
-                        paths.add(new File(file + "/test").toURL());
-                fl = new File("build/resources/test");
-                if (fl.exists())
-                    paths.add(fl.toURL());
-            }
+//            File fl = new File("out");
+//            if (fl.exists()) {
+//                paths.add(new File(fl + "/test/classes").toURL());
+//                paths.add(new File(fl + "/test/resources").toURL());
+//            } else {
+//                fl = new File("build/classes");
+//                if (fl.exists())
+//                    for (File file : Objects.requireNonNull(fl.listFiles()))
+//                        paths.add(new File(file + "/test").toURL());
+//                fl = new File("build/resources/test");
+//                if (fl.exists())
+//                    paths.add(fl.toURL());
+//            }
 
             paths.add(new URL(
                     "jar:file:/" + new File("mixin-0.8.5.jar").getAbsoluteFile() + "!/"
             ));
 
             ClassLoader loader = (ClassLoader) JDKLoader.createLoader(paths.toArray(new URL[0]), FlameLoader.class.getClassLoader(), true);
+            ((FlameLoader) loader).addUrlRoot(new File("").getAbsolutePath());
 
             Thread.currentThread().setContextClassLoader(loader);
 
