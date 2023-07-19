@@ -28,16 +28,18 @@ public class LoaderTest {
 //                if (fl.exists())
 //                    paths.add(fl.toURL());
 //            }
-
+    
+            String pth = new File("mixin-0.8.5.jar").getAbsolutePath();
+            if (!pth.startsWith("/")) pth = "/" + pth;
             paths.add(new URL(
-                    "jar:file:/" + new File("mixin-0.8.5.jar").getAbsoluteFile() + "!/"
+                    "jar:file:" + pth + "!/"
             ));
-
+    
             ClassLoader loader = (ClassLoader) JDKLoader.createLoader(paths.toArray(new URL[0]), FlameLoader.class.getClassLoader(), true);
             ((IFlameLoader) loader).addOverridePath(new File("").getAbsolutePath());
-
+    
             Thread.currentThread().setContextClassLoader(loader);
-
+    
             {
                 Class<?> clazz = loader.loadClass("mixin.MixinLoader");
                 clazz.getMethod("init").invoke(null);
