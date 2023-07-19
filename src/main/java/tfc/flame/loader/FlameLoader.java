@@ -402,8 +402,7 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 
 			// write class back to bytes
 			if (changed[0]) {
-				//noinspection PointlessBitwiseExpression
-				ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_MAXS);
+				ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
 				node[0].accept(writer);
 				data = writer.toByteArray();
 			}
