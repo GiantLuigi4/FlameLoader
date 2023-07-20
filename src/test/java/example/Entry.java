@@ -47,28 +47,8 @@ public class Entry {
 				URL url = modUrls.nextElement();
 				try {
 					InputStream is = url.openStream();
-					
-					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					// read all bytes
-					while (true) {
-						byte[] data1 = new byte[is.available()];
-						
-						int read = is.read(data1);
-						if (read == -1)
-							break;
-						
-						// buffered input stream can be scuffed
-						if (read == 0) {
-							int b = is.read();
-							if (b == -1) break;
-							else baos.write(b);
-						}
-						
-						baos.write(data1);
-					}
-					
-					JsonObject obj = gson.fromJson(baos.toString(), JsonObject.class);
-					
+					JsonObject obj = gson.fromJson(new String(is.readAllBytes()), JsonObject.class);
+					is.close();
 					IFlameMod mod = null;
 					if (obj.has("entry")) {
 						mod = (IFlameMod) loader.loadClass(

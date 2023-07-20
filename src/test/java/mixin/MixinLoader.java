@@ -56,8 +56,8 @@ public class MixinLoader {
 					return null;
 				}
 			};
-			if (theLoader instanceof FlameLoader) {
-				((FlameLoader) theLoader).transformers.add(Phase.FIRST, MIXIN_TRANSFORMER);
+			if (theLoader instanceof FlameLoader loader) {
+				loader.transformers.add(Phase.FIRST, MIXIN_TRANSFORMER);
 			}
 		} catch (Throwable err) {
 			err.printStackTrace();

@@ -53,10 +53,7 @@ public class BytecodeWriter {
 		if (insnNode instanceof FrameNode) return null;
 		
 		if (insnNode instanceof LabelNode) return getLabelName(labels, ((LabelNode) insnNode).getLabel());
-		if (insnNode instanceof LineNumberNode) {
-			LineNumberNode ln = (LineNumberNode) insnNode;
-			return "line " + ln.line + " " + getLabelName(labels, ln.start.getLabel());
-		}
+		if (insnNode instanceof LineNumberNode ln) return "line " + ln.line + " " + getLabelName(labels, ln.start.getLabel());
 		
 		String name = INSN_NAMES.get(insnNode.getOpcode());
 		int[] stackChange = StackTracker.getIO(insnNode);
@@ -196,8 +193,7 @@ public class BytecodeWriter {
 			HashMap<Label, String> labels = new HashMap<>();
 			
 			for (AbstractInsnNode instruction : method.instructions) {
-				if (instruction instanceof LabelNode) {
-					LabelNode lbl = (LabelNode) instruction;
+				if (instruction instanceof LabelNode lbl) {
 					if (!labels.containsKey(lbl.getLabel()))
 						labels.put(lbl.getLabel(), "L" + labels.size());
 				}
