@@ -8,7 +8,6 @@ import tfc.flame.loader.asm.PriorityPhaseList;
 import tfc.flame.loader.util.FlameResource;
 import tfc.flame.loader.util.JDKLoader;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -103,14 +102,10 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 
 				URLConnection connection = url.openConnection();
 
-				if (connection instanceof HttpURLConnection) {
-					HttpURLConnection huc = (HttpURLConnection) connection;
-
+				if (connection instanceof HttpURLConnection huc) {
 					if (huc.getResponseCode() != HttpURLConnection.HTTP_NOT_FOUND)
 						return new URL[]{url, path};
-				} else if (connection instanceof JarURLConnection) {
-					JarURLConnection juc = (JarURLConnection) connection;
-
+				} else if (connection instanceof JarURLConnection juc) {
 					if (juc.getJarFile() != null)
 						return new URL[]{url, path};
 				}
@@ -148,14 +143,10 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 
 				URLConnection connection = url.openConnection();
 
-				if (connection instanceof HttpURLConnection) {
-					HttpURLConnection huc = (HttpURLConnection) connection;
-
+				if (connection instanceof HttpURLConnection huc) {
 					if (huc.getResponseCode() != HttpURLConnection.HTTP_NOT_FOUND)
 						theUrls.add(url);
-				} else if (connection instanceof JarURLConnection) {
-					JarURLConnection juc = (JarURLConnection) connection;
-
+				} else if (connection instanceof JarURLConnection juc) {
 					if (juc.getJarFile() != null)
 						theUrls.add(url);
 				}
@@ -172,12 +163,12 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 		}
 
 		Iterator<URL> itr = theUrls.iterator();
-		return new Enumeration<URL>() {
+		return new Enumeration<>() {
 			@Override
 			public boolean hasMoreElements() {
 				return itr.hasNext();
 			}
-
+			
 			@Override
 			public URL nextElement() {
 				return itr.next();
@@ -245,7 +236,7 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 			if (path[1] == null) {
 				URL url = getParent().getResource(name.replace(".", "/") + ".class");
 
-				String pth = url.getFile();
+				String pth = url.getPath();
 				for (String urlRoot : urlRoots) {
 					if (pth.startsWith(urlRoot))
 						return true;
@@ -345,27 +336,9 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 		ClassNotFoundException ex = null;
 
 		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			//noinspection resource
 			InputStream is = path[0].openStream();
-			// read all bytes
-			while (true) {
-				byte[] data1 = new byte[is.available()];
-
-				int read = is.read(data1);
-				if (read == -1)
-					break;
-				// buffered input stream can be scuffed
-				if (read == 0) {
-					int b = is.read();
-					if (b == -1) break;
-					else baos.write(b);
-				}
-
-				baos.write(data1);
-			}
-
-			data = baos.toByteArray();
+			data = is.readAllBytes();
+			is.close();
 		} catch (Throwable err) {
 			// deffer exception to allow for creating classes at runtime
 			ex = new ClassNotFoundException("Could not find class " + name + " in " + path[1], err);

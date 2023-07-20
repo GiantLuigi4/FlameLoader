@@ -70,7 +70,7 @@ public interface IFlameLoader {
 	/**
 	 * gets a copy of the list of urls that are valid for the class loader to load classes from
 	 *
-	 * @return the list of urls
+	 * @return the array of urls
 	 */
 	URL[] getClassPath();
 	
@@ -78,7 +78,7 @@ public interface IFlameLoader {
 	 * gets the bytecode of a class file from the loader
 	 *
 	 * @param name               the name of the class to get the bytecode of; this should be in dotted class notation
-	 * @param runTransformers    whether or not to run class transformers, or get the raw bytecode
+	 * @param runTransformers    whether to run class transformers, or get the raw bytecode
 	 * @param stopTransformingOn the instance of the transformer at which you would like to stop transforming the class
 	 * @return the bytecode of the class
 	 * @throws ClassNotFoundException if the class is either not valid to load on the flame loader, or is not found on the flame loader

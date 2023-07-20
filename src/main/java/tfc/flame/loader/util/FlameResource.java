@@ -23,8 +23,7 @@ public class FlameResource {
 			try {
 				// TODO: support jars sourced from the internet..?
 				URLConnection connection = path.openConnection();
-				if (connection instanceof JarURLConnection) {
-					JarURLConnection juc = (JarURLConnection) connection;
+				if (connection instanceof JarURLConnection juc) {
 					jar = juc.getJarFile();
 					entry = juc.getJarEntry();
 					mf = juc.getManifest();
