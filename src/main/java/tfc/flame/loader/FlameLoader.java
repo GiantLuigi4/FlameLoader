@@ -102,10 +102,12 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 
 				URLConnection connection = url.openConnection();
 
-				if (connection instanceof HttpURLConnection huc) {
+				if (connection instanceof HttpURLConnection) {
+					HttpURLConnection huc = (HttpURLConnection) connection;
 					if (huc.getResponseCode() != HttpURLConnection.HTTP_NOT_FOUND)
 						return new URL[]{url, path};
-				} else if (connection instanceof JarURLConnection juc) {
+				} else if (connection instanceof JarURLConnection) {
+					JarURLConnection juc = (JarURLConnection) connection;
 					if (juc.getJarFile() != null)
 						return new URL[]{url, path};
 				}
@@ -143,10 +145,12 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 
 				URLConnection connection = url.openConnection();
 
-				if (connection instanceof HttpURLConnection huc) {
+				if (connection instanceof HttpURLConnection) {
+					HttpURLConnection huc = (HttpURLConnection) connection;
 					if (huc.getResponseCode() != HttpURLConnection.HTTP_NOT_FOUND)
 						theUrls.add(url);
-				} else if (connection instanceof JarURLConnection juc) {
+				} else if (connection instanceof JarURLConnection) {
+					JarURLConnection juc = (JarURLConnection) connection;
 					if (juc.getJarFile() != null)
 						theUrls.add(url);
 				}
