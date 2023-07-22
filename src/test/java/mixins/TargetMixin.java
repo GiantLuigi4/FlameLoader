@@ -1,5 +1,6 @@
 package mixins;
 
+import mixin.extra.dump.Insn;
 import mixin.test.MixinTarget;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
@@ -12,12 +13,13 @@ public class TargetMixin {
 		System.out.println("Start of Main");
 	}
 	
-	@ModifyVariable(method = "main", at = @At(value = "STORE"))
-	private static int beforePrint(int var) {
-		int newVar = var + 1;
-		System.out.printf("Modifying variable i: %d -> %d%n", var, newVar);
-		return newVar;
-	}
+	//Not working very much
+//	@ModifyVariable(method = "main", at = @At(value = "STORE", target = "Ljava/lang/Integer;i"))
+//	private static int beforePrint(int var) {
+//		int newVar = var + 1;
+//		System.out.printf("Modifying variable i: %d -> %d%n", var, newVar);
+//		return newVar;
+//	}
 	
 	@Inject(method = "main", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(I)V", ordinal = 0, shift = At.Shift.AFTER))
 	private static void afterPrint(String[] args, CallbackInfo ci) {

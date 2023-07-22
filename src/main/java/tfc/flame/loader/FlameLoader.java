@@ -8,6 +8,7 @@ import tfc.flame.loader.asm.PriorityPhaseList;
 import tfc.flame.loader.util.FlameResource;
 import tfc.flame.loader.util.JDKLoader;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -167,7 +168,7 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 		}
 
 		Iterator<URL> itr = theUrls.iterator();
-		return new Enumeration<>() {
+		return new Enumeration<URL>() {
 			@Override
 			public boolean hasMoreElements() {
 				return itr.hasNext();
@@ -340,8 +341,12 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 		ClassNotFoundException ex = null;
 
 		try {
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
 			InputStream is = path[0].openStream();
-			data = is.readAllBytes();
+			int b;
+			while (((b = is.read()) != -1)) bout.write(b);
+			data = bout.toByteArray();
+			bout.close();
 			is.close();
 		} catch (Throwable err) {
 			// deffer exception to allow for creating classes at runtime
