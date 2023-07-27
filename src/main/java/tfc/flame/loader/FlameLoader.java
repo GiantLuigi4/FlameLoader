@@ -398,7 +398,12 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 
 		return data;
 	}
-
+	
+	@Override
+	public URL[] getURLs() {
+		return urls;
+	}
+	
 	@Override
 	public InputStream getResourceAsStream(String name) {
 		return super.getResourceAsStream(name);

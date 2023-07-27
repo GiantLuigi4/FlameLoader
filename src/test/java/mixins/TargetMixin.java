@@ -1,6 +1,5 @@
 package mixins;
 
-import mixin.extra.dump.Insn;
 import mixin.test.MixinTarget;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
