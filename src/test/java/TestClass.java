@@ -6,8 +6,8 @@ import tfc.flame.loader.FlameLoader;
 public class TestClass {
     static {
         ClassLoader theLoader = TestClass.class.getClassLoader();
-        if (theLoader instanceof FlameLoader) {
-            ((FlameLoader) theLoader).transformers.add(Phase.FIRST, new ClassTransformer() {
+        if (theLoader instanceof FlameLoader loader) {
+            loader.transformers.add(Phase.FIRST, new ClassTransformer() {
                 @Override
                 public ClassNode accept(ClassNode node) {
                     return null;

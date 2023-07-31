@@ -174,8 +174,7 @@ public class StackTracker {
 			size += io[1] - io[0];
 			writeInto(print, path, size);
 			
-			if (print instanceof MethodInsnNode) {
-				MethodInsnNode methodNode = (MethodInsnNode) print;
+			if (print instanceof MethodInsnNode methodNode) {
 				
 				// code
 				int[] remainder1 = new int[1];

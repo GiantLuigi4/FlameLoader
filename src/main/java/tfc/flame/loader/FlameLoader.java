@@ -105,12 +105,10 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 
 				if (connection instanceof HttpURLConnection) {
 					HttpURLConnection huc = (HttpURLConnection) connection;
-
 					if (huc.getResponseCode() != HttpURLConnection.HTTP_NOT_FOUND)
 						return new URL[]{url, path};
 				} else if (connection instanceof JarURLConnection) {
 					JarURLConnection juc = (JarURLConnection) connection;
-
 					if (juc.getJarFile() != null)
 						return new URL[]{url, path};
 				}
@@ -150,12 +148,10 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 
 				if (connection instanceof HttpURLConnection) {
 					HttpURLConnection huc = (HttpURLConnection) connection;
-
 					if (huc.getResponseCode() != HttpURLConnection.HTTP_NOT_FOUND)
 						theUrls.add(url);
 				} else if (connection instanceof JarURLConnection) {
 					JarURLConnection juc = (JarURLConnection) connection;
-
 					if (juc.getJarFile() != null)
 						theUrls.add(url);
 				}
@@ -177,7 +173,7 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 			public boolean hasMoreElements() {
 				return itr.hasNext();
 			}
-
+			
 			@Override
 			public URL nextElement() {
 				return itr.next();
@@ -245,7 +241,7 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 			if (path[1] == null) {
 				URL url = getParent().getResource(name.replace(".", "/") + ".class");
 
-				String pth = url.getFile();
+				String pth = url.getPath();
 				for (String urlRoot : urlRoots) {
 					if (pth.startsWith(urlRoot))
 						return true;
@@ -346,27 +342,13 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 		ClassNotFoundException ex = null;
 
 		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			//noinspection resource
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
 			InputStream is = path[0].openStream();
-			// read all bytes
-			while (true) {
-				byte[] data1 = new byte[is.available()];
-
-				int read = is.read(data1);
-				if (read == -1)
-					break;
-				// buffered input stream can be scuffed
-				if (read == 0) {
-					int b = is.read();
-					if (b == -1) break;
-					else baos.write(b);
-				}
-
-				baos.write(data1);
-			}
-
-			data = baos.toByteArray();
+			int b;
+			while (((b = is.read()) != -1)) bout.write(b);
+			data = bout.toByteArray();
+			bout.close();
+			is.close();
 		} catch (Throwable err) {
 			// deffer exception to allow for creating classes at runtime
 			ex = new ClassNotFoundException("Could not find class " + name + " in " + path[1], err);
@@ -417,7 +399,12 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 
 		return data;
 	}
-
+	
+	@Override
+	public URL[] getURLs() {
+		return urls;
+	}
+	
 	@Override
 	public InputStream getResourceAsStream(String name) {
 		return super.getResourceAsStream(name);

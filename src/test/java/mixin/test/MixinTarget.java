@@ -2,6 +2,7 @@ package mixin.test;
 
 public class MixinTarget {
 	public static void main(String[] args) {
+		int t = 5;
 		int i = 52;
 		System.out.println(i + 16);
 		
