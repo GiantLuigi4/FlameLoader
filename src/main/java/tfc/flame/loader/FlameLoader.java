@@ -265,7 +265,8 @@ public class FlameLoader extends URLClassLoader implements IFlameLoader {
 		if (aggressive || acceptedURL) {
 			if (name.startsWith("java")) return super.loadClass(name, resolve);
 			if (name.startsWith("tfc.flame.loader")) return super.loadClass(name, resolve);
-
+			if (name.startsWith("org.objectweb.asm")) return super.loadClass(name, resolve);
+			
 			Class<?> c = findLoadedClass(name);
 			if (c != null) return c;
 			
